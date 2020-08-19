@@ -1,4 +1,6 @@
 from tkinter import *
+import tkinter.messagebox as box
+import pickle,os
 
 #Base
 global window
@@ -48,6 +50,9 @@ crCount.insert(0,'0')
 dataFrame=Frame(col2)
 dataLabel=Label(dataFrame,text="Stored Data:",font='BOLD')
 dataInfo=Text(dataFrame,width=25,height=10,state=DISABLED)
+#databtns
+btnFrame=Frame(col2)
+writfil=Button(btnFrame,text="Write File")
 
 #col1 Geometry
 col1.grid(column=0,row=0)
@@ -86,21 +91,53 @@ crUp.grid(row=4,column=2,padx=5,pady=2)
 dataFrame.grid(column=1,padx=8)
 dataLabel.grid(row=1)
 dataInfo.grid()
+#btnFrame Geometry
+btnFrame.grid(column=1,pady=5)
+writfil.grid(row=2)
 
 #Functions
 class guiFuncts:
 
 	def openFile():
 		yr=year.get()
-		file=open('docs/year/'+yr+'.txt','a+')
+		file=open('docs/year/'+yr+'.dat','ab+')
 		file.close()
-		file=open('docs/year/'+yr+'.txt','r')
-		dat=file.read()
+		file=open('docs/year/'+yr+'.dat','rb')
+		dat=pickle.load(file)
+		file.close()
 		dataInfo.configure(state=NORMAL)
 		dataInfo.delete('1.1',END)
 		dataInfo.insert('1.1',dat)
 		dataInfo.configure(state=DISABLED)
-		file.close()
+		#Restore entry info
+		enCount.delete(0,'end')
+		enCount.insert(0,dat['enemies'])
+		colChestCount.delete(0,'end')
+		colChestCount.insert(0,dat['colichests'])
+		bdwCount.delete(0,'end')
+		bdwCount.insert(0,dat['baldchests'])
+		swpCount.delete(0,'end')
+		swpCount.insert(0,dat['swipchests'])
+		ahCount.delete(0,'end')
+		ahCount.insert(0,dat['ahchests'])
+		crCount.delete(0,'end')
+		crCount.insert(0,dat['crosschests'])
+	def writeFile():
+		c1=enCount.get()
+		c2=colChestCount.get()
+		c3=bdwCount.get()
+		c4=swpCount.get()
+		c5=ahCount.get()
+		c6=crCount.get()
+		counts=dict={'enemies':c1,'colichests':c2,'baldchests':c3,'swipchests':c4,'ahchests':c5,'crosschests':c6}
+		print(counts)
+		dataInfo.configure(state=NORMAL)
+		dataInfo.delete('1.1',END)
+		dataInfo.insert('1.1',str(counts))
+		dataInfo.configure(state=DISABLED)
+		yr=year.get()
+		file=open('docs/year/'+yr+'.dat','wb')
+		pickle.dump(counts,file)
 
 	#Coli
 	def enemUp():
@@ -146,6 +183,8 @@ bdwUp.configure(command=guiFuncts.bdwUpf)
 swpUp.configure(command=guiFuncts.swpUpf)
 ahUp.configure(command=guiFuncts.ahUpf)
 crUp.configure(command=guiFuncts.crUpf)
+#dataBtns
+writfil.configure(command=guiFuncts.writeFile)
 
 #Run app
 window.mainloop()
