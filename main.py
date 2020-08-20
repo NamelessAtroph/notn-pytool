@@ -370,7 +370,7 @@ class guiFuncts:
 			c5=gens.get()
 			c6=viss.get()
 			datat.configure(state=NORMAL)
-			datat.delete('1','end')
+			datat.delete('1.1','end')
 			totals=int(c1)+int(c2)+int(c3)+int(c4)+int(c5)+int(c6)
 			datat.insert('1.1',"Familiar%: "+str(round(int(c1)/totals*100))+"\nApparel%: "+str(round(int(c2)/totals*100))+"\nEgg%: "+str(round(int(c3)/totals*100))+"\nBreed Scroll%: "+str(round(int(c4)/totals*100))+"\nGene Scroll%: "+str(round(int(c5)/totals*100))+"\nVista%: "+str(round(int(c6)/totals*100)))
 			datat.configure(state=DISABLED)
@@ -384,7 +384,7 @@ class guiFuncts:
 			counts=dict={'fams':c1,'apps':c2,'eggs':c3,'brds':c4,'gens':c5,'viss':c6}
 			totals=int(c1)+int(c2)+int(c3)+int(c4)+int(c5)+int(c6)
 			datat.configure(state=NORMAL)
-			datat.delete('1','end')
+			datat.delete('1.1','end')
 			datat.insert('1.1',"Familiar%: "+str(round(int(c1)/totals*100))+"\nApparel%: "+str(round(int(c2)/totals*100))+"\nEgg%: "+str(round(int(c3)/totals*100))+"\nBreed Scroll%: "+str(round(int(c4)/totals*100))+"\nGene Scroll%: "+str(round(int(c5)/totals*100))+"\nVista%: "+str(round(int(c6)/totals*100)))
 			datat.configure(state=DISABLED)
 			print(counts)
